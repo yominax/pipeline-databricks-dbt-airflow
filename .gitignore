@@ -1,0 +1,31 @@
+.git
+.env
+.DS_Store
+airflow_settings.yaml
+__pycache__/
+astro
+.venv
+airflow-webserver.pid
+webserver_config.py
+airflow.cfg
+airflow.db
+
+# terraform-related files
+.terraform/
+*.hcl
+*.tfstate
+*.tfstate.backup
+
+# azure stuff
+include\azure\adb_query.txt
+
+# dbt-related files
+.dbt/
+dbt_packages/
+target/
+logs/
+profiles.yml
+
+# dbt query model backups
+BACKUP!!.txt
+modified_sql_query.txt

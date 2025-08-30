@@ -1,0 +1,35 @@
+# Mount Bronze Container
+# dbutils.fs.mount(
+#     source = 'wasbs://dane-bronze@daneadlsdatapipeline.blob.core.windows.net',
+#     mount_point = '/mnt/dane-bronze', 
+#     extra_configs = {'fs.azure.account.key.daneadlsdatapipeline.blob.core.windows.net': dbutils.secrets.get(scope = 'adbSecretScope', key = 'storageAccountKey')}
+# )
+
+# Check for the existence of the data inside the bronze container
+dbutils.fs.ls('/mnt/cod-bronze')
+
+# Create the database
+spark.sql('create database HumanResourceSD')
+
+# Define the paths to the CSV files in the dane-bronze container
+people_data_path = "/mnt/dane-bronze/people_data.csv"
+people_employment_history_path = "/mnt/dane-bronze/people_employment_history.csv"
+
+# Load the people_data.csv into the HumanResourceSD database
+spark.sql("""
+    CREATE TABLE IF NOT EXISTS HumanResourceSD.people_data
+    USING CSV
+    OPTIONS (header 'true', inferSchema 'true')
+    LOCATION '{}'
+""".format(people_data_path))
+
+# Load the people_employment_history.csv into the HumanResourceSD database
+spark.sql("""
+    CREATE TABLE IF NOT EXISTS HumanResourceSD.people_employment_history
+    USING CSV
+    OPTIONS (header 'true', inferSchema 'true')
+    LOCATION '{}'
+""".format(people_employment_history_path))
+
+# Drop the snapshots database if theres a mistake
+spark.sql('DROP DATABASE snapshots CASCADE')

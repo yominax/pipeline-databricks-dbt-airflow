@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: fact_people
+    description: "A fact table combining employee history and demographic data."
+    columns:
+      - name: employee_id
+        description: "Unique identifier for employees."
+        tests:
+          - not_null
+          - unique
+      - name: full_name
+        description: "Full name of the employee."
+        tests:
+          - not_null
+      - name: department_key
+        description: "Foreign key to the department dimension."
+        tests:
+          - relationships:
+              to: ref('dim_department')
+              field: department_key
+      - name: education_key
+        description: "Foreign key to the education dimension."
+        tests:
+          - relationships:
+              to: ref('dim_education')
+              field: education_key

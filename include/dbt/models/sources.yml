@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: humanresourcesd
+    tables:
+      - name: people_data
+      - name: people_employment_history

@@ -1,0 +1,8 @@
+project:
+    name: de-project-2
+
+webserver:
+    port: 8084
+    
+postgres:
+    port: 5434
